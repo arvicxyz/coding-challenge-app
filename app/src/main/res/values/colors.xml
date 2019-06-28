@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!-- System -->
+    <color name="colorPrimary">#64b5f6</color>
+    <color name="colorPrimaryDark">#2286c3</color>
+    <color name="colorPrimaryLight">#9be7ff</color>
+    <color name="colorAccent">#1976d2</color>
+    <color name="colorAccentDark">#004ba0</color>
+    <color name="colorAccentLight">#63a4ff</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorTertiaryText">#FAFAFA</color>
+    <color name="colorIcons">#FFFFFF</color>
+    <color name="colorDivider">#DDDFE2</color>
+    <color name="colorSelector">#E1E1E1</color>
+    <color name="colorListView">#E9EBEE</color>
+    <!-- Custom -->
+    <color name="colorProgressBg">@color/colorAccent</color>
+    <color name="colorClearBlackBg">#99000000</color>
 </resources>

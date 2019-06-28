@@ -1,8 +1,10 @@
-package com.codingchallenge.app;
+package com.codingchallenge.app.views;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.codingchallenge.app.R;
 
 public class MainActivity extends AppCompatActivity {
 
