@@ -7,16 +7,18 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.codingchallenge.app.R;
+import com.codingchallenge.app.viewmodels.HomeFragmentViewModel;
 import com.codingchallenge.app.views.MainActivity;
+import com.codingchallenge.app.views.base.BaseFragment;
+import com.codingchallenge.app.views.observers.HomeFragmentObserver;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmentViewModel> {
 
     private MainActivity _activity;
     private Unbinder _unbinder;
