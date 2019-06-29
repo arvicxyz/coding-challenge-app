@@ -8,6 +8,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.codingchallenge.app.R;
+import com.codingchallenge.app.services.TrackService;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,9 +20,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Display next view after splash loading after 'x' seconds
-        Handler handler = new Handler();
-        handler.postDelayed(this::navigateToMainActivity, SPLASH_DELAY);
+        TrackService service = new TrackService();
+        service.getTracks().observe(this, trackList -> {
+            // Display next view after splash loading after 'x' seconds
+            Handler handler = new Handler();
+            handler.postDelayed(this::navigateToMainActivity, SPLASH_DELAY);
+        });
     }
 
     private void navigateToMainActivity() {
