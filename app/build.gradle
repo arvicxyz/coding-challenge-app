@@ -50,6 +50,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // UI
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    // API Connection
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.moshi:moshi:1.8.0'
+
     // Others
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
@@ -60,4 +69,8 @@ dependencies {
     def lifecycle_version = '2.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    def glide_version = '4.9.0'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 }
