@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int _lastPosition;
 
-    @BindView(R.id.toolbar)
-    Toolbar _toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -39,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Timber.plant(new Timber.DebugTree());
 
         _lastPosition = -1;
-        setSupportActionBar(_toolbar);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String[] permissions = {

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Mobi</string>
+    <string name="app_name">Mobee</string>
     <string name="default_content_desc_text">default</string>
-    <string name="loading_text">Loading…</string>
 </resources>
