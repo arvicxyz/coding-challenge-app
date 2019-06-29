@@ -97,13 +97,29 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             }
 
             // Name
-            _trackName.setText(_track.getTrackName());
+            String trackName = _track.getTrackName();
+            if (!TextUtils.isEmpty(trackName)) {
+                _trackName.setText(trackName);
+            } else {
+                _trackName.setText(_context.getString(R.string.not_available_text));
+            }
 
             // Genre
-            _trackGenre.setText(_track.getTrackGenre());
+            String trackGenre = _track.getTrackGenre();
+            if (!TextUtils.isEmpty(trackGenre)) {
+                _trackGenre.setText(trackGenre);
+                _trackGenre.setVisibility(View.VISIBLE);
+            } else {
+                _trackGenre.setVisibility(View.GONE);
+            }
 
             // Price
-            _trackPrice.setText(MessageFormat.format("$ {0}", _track.getTrackPrice()));
+            float trackPrice = _track.getTrackPrice();
+            if (trackPrice > 0) {
+                _trackPrice.setText(MessageFormat.format("$ {0}", trackPrice));
+            } else {
+                _trackPrice.setText(_context.getString(R.string.free_text));
+            }
         }
 
         public void setListeners() {

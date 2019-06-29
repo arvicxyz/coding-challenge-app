@@ -7,14 +7,15 @@
     <color name="colorAccent">#1976d2</color>
     <color name="colorAccentDark">#004ba0</color>
     <color name="colorAccentLight">#63a4ff</color>
-    <color name="colorPrimaryText">#212121</color>
+    <color name="colorPrimaryText">#FAFAFA</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="colorTertiaryText">#FAFAFA</color>
+    <color name="colorTertiaryText">#212121</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#DDDFE2</color>
-    <color name="colorSelector">#E1E1E1</color>
-    <color name="colorListView">#E9EBEE</color>
+    <color name="colorSelector">#DDDFE2</color>
+    <color name="colorListView">#313131</color>
     <!-- Custom -->
-    <color name="colorProgressBg">@color/colorAccent</color>
-    <color name="colorClearBlackBg">#99000000</color>
+    <color name="colorItemBg">#221F1F</color>
+    <color name="colorRipple">@color/colorSelector</color>
+    <color name="colorRippleMask">#42ffffff</color>
 </resources>
