@@ -18,11 +18,10 @@
         sothree:umanoInitialState="collapsed"
         sothree:umanoOverlay="true"
         sothree:umanoPanelHeight="0dp"
-        sothree:umanoScrollableView="@+id/scrollView"
         sothree:umanoShadowHeight="0dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewNotifications"
+            android:id="@+id/recyclerViewTracks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorListView"
@@ -32,11 +31,11 @@
             android:scrollbarSize="4dp"
             android:scrollbarThumbVertical="@color/colorAccent"
             android:scrollbars="vertical"
-            tools:listitem="@layout/row_movie_item" />
+            tools:listitem="@layout/row_track_item" />
 
         <include
             android:id="@+id/dragView"
-            layout="@layout/view_movie_details" />
+            layout="@layout/view_track_details" />
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
