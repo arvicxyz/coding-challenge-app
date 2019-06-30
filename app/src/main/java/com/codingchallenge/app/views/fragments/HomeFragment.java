@@ -1,5 +1,6 @@
 package com.codingchallenge.app.views.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -7,19 +8,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.constraintlayout.widget.Guideline;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codingchallenge.app.R;
 import com.codingchallenge.app.models.TrackModel;
+import com.codingchallenge.app.models.constants.ArtworkDimensions;
 import com.codingchallenge.app.services.TrackService;
+import com.codingchallenge.app.utils.ImageUtil;
 import com.codingchallenge.app.viewmodels.HomeFragmentViewModel;
 import com.codingchallenge.app.views.MainActivity;
 import com.codingchallenge.app.views.adapters.TrackAdapter;
@@ -53,7 +58,13 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     RecyclerView _recyclerViewTracks;
 
     @BindView(R.id.dragView)
-    LinearLayout _dragView;
+    ConstraintLayout _dragView;
+
+    @BindView(R.id.guidelineImage)
+    Guideline _guidelineImage;
+
+    @BindView(R.id.guidelineDetails)
+    Guideline _guidelineDetails;
 
     // Details page views
     private ScrollView _scrollView;
@@ -125,24 +136,68 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
         // Artwork
         if (!TextUtils.isEmpty(track.getTrackArtworkUrl())) {
+            String artworkUrl = ImageUtil.getHighDefArtworkUrl(track.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
             Glide.with(_activity)
-                    .load(track.getTrackArtworkUrl())
+                    .load(artworkUrl)
+                    .centerCrop()
                     .encodeQuality(100)
+                    .encodeFormat(Bitmap.CompressFormat.WEBP)
                     .into(_trackArtwork);
         }
 
         // Name
-        _trackName.setText(track.getTrackName());
+        String trackName = track.getTrackName();
+        if (!TextUtils.isEmpty(trackName)) {
+            _trackName.setText(trackName);
+        } else {
+            _trackName.setText(_activity.getString(R.string.not_available_text));
+        }
 
         // Genre
-        _trackGenre.setText(track.getTrackGenre());
+        String trackGenre = track.getTrackGenre();
+        if (!TextUtils.isEmpty(trackGenre)) {
+            _trackGenre.setText(trackGenre);
+            _trackGenre.setVisibility(View.VISIBLE);
+        } else {
+            _trackGenre.setVisibility(View.GONE);
+        }
 
         // Price
-        _trackPrice.setText(MessageFormat.format("$ {0}", track.getTrackPrice()));
+        float trackPrice = track.getTrackPrice();
+        if (trackPrice > 0) {
+            _trackPrice.setText(MessageFormat.format("$ {0}", trackPrice));
+        } else {
+            _trackPrice.setText(_activity.getString(R.string.free_text));
+        }
 
         // Description
-        _trackDescription.setText(track.getTrackDescription());
+        String trackDescription = track.getTrackDescription();
+        if (!TextUtils.isEmpty(trackDescription)) {
 
-        _displayHandler.postDelayed(() -> _slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED), DISPLAY_DELAY);
+            _trackDescription.setText(trackDescription);
+            _trackDescription.setVisibility(View.VISIBLE);
+            _guidelineImage.setGuidelinePercent(0.72f);
+
+            ConstraintSet set = new ConstraintSet();
+            set.clone(_dragView);
+            set.connect(_scrollView.getId(), ConstraintSet.TOP, _guidelineDetails.getId(), ConstraintSet.BOTTOM);
+            set.applyTo(_dragView);
+        } else {
+
+            // Pull down views above description if it has no description
+            _trackDescription.setText("");
+            _trackDescription.setVisibility(View.GONE);
+            _guidelineImage.setGuidelinePercent(0.9f);
+
+            ConstraintSet set = new ConstraintSet();
+            set.clone(_dragView);
+            set.clear(_scrollView.getId(), ConstraintSet.TOP);
+            set.applyTo(_dragView);
+        }
+
+        _displayHandler.postDelayed(() -> {
+            _scrollView.fullScroll(ScrollView.FOCUS_UP);
+            _slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        }, DISPLAY_DELAY);
     }
 }

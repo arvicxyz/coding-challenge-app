@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- System -->
-    <color name="colorPrimary">#64b5f6</color>
-    <color name="colorPrimaryDark">#2286c3</color>
-    <color name="colorPrimaryLight">#9be7ff</color>
-    <color name="colorAccent">#1976d2</color>
-    <color name="colorAccentDark">#004ba0</color>
-    <color name="colorAccentLight">#63a4ff</color>
+    <color name="colorPrimary">#c62828</color>
+    <color name="colorPrimaryDark">#8e0000</color>
+    <color name="colorPrimaryLight">#ff5f52</color>
+    <color name="colorAccent">#fdd835</color>
+    <color name="colorAccentDark">#c6a700</color>
+    <color name="colorAccentLight">#ffff6b</color>
     <color name="colorPrimaryText">#FAFAFA</color>
-    <color name="colorSecondaryText">#757575</color>
+    <color name="colorSecondaryText">#9E9E9E</color>
     <color name="colorTertiaryText">#212121</color>
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#DDDFE2</color>
-    <color name="colorSelector">#DDDFE2</color>
-    <color name="colorListView">#313131</color>
+    <color name="colorSelector">#EEEEEE</color>
+    <color name="colorListView">@color/colorBlackBg</color>
     <!-- Custom -->
-    <color name="colorItemBg">#221F1F</color>
+    <color name="colorBlackBg">#121212</color>
+    <color name="colorGrayBg">#1E1E1E</color>
+    <color name="colorPageBg">@color/colorBlackBg</color>
+    <color name="colorItemBg">@color/colorGrayBg</color>
+    <color name="colorDetailsBg">@color/colorBlackBg</color>
     <color name="colorRipple">@color/colorSelector</color>
-    <color name="colorRippleMask">#42ffffff</color>
+    <color name="colorRippleMask">#90EEEEEE</color>
+    <color name="colorFadeStart">#00121212</color>
+    <color name="colorFadeEnd">@color/colorBlackBg</color>
 </resources>

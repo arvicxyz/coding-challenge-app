@@ -1,6 +1,7 @@
 package com.codingchallenge.app.views.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codingchallenge.app.R;
 import com.codingchallenge.app.models.TrackModel;
+import com.codingchallenge.app.models.constants.ArtworkDimensions;
+import com.codingchallenge.app.utils.ImageUtil;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -90,9 +93,12 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
             // Artwork
             if (!TextUtils.isEmpty(_track.getTrackArtworkUrl())) {
+                String artworkUrl = ImageUtil.getHighDefArtworkUrl(_track.getTrackArtworkUrl(), ArtworkDimensions.HI_DEF_MEDIUM);
                 Glide.with(_context)
-                        .load(_track.getTrackArtworkUrl())
+                        .load(artworkUrl)
+                        .centerCrop()
                         .encodeQuality(100)
+                        .encodeFormat(Bitmap.CompressFormat.WEBP)
                         .into(_trackArtwork);
             }
 

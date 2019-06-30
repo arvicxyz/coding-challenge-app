@@ -15,8 +15,8 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">false</item>
-        <item name="android:statusBarColor">@color/colorItemBg</item>
-        <item name="android:background">@color/colorItemBg</item>
+        <item name="android:statusBarColor">@color/colorBlackBg</item>
+        <item name="android:background">@color/colorBlackBg</item>
     </style>
 
     <style name="Theme.Main.Base" parent="Theme.MaterialComponents.Light.DarkActionBar">
