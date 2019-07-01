@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -51,6 +52,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     private TrackAdapter _trackAdapter;
     private ArrayList<TrackModel> _tracksList;
 
+    private SlidingUpPanelLayout.PanelState _previousState;
+
     @BindView(R.id.slidingLayout)
     com.sothree.slidinguppanel.SlidingUpPanelLayout _slidingLayout;
 
@@ -65,6 +68,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
     @BindView(R.id.guidelineDetails)
     Guideline _guidelineDetails;
+
+    @BindView(R.id.buttonClose)
+    ImageButton _buttonClose;
 
     // Details page views
     private ScrollView _scrollView;
@@ -117,7 +123,33 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
         // Slide layout
         _slidingLayout.setScrollableView(_scrollView);
-        _slidingLayout.setFadeOnClickListener(v -> _slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED));
+        _slidingLayout.setTouchEnabled(false);
+        _slidingLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel,
+                                            SlidingUpPanelLayout.PanelState previousState,
+                                            SlidingUpPanelLayout.PanelState newState) {
+                // Fixes the UI issue on sliding panel layout pausing midway the state change
+                if (newState == SlidingUpPanelLayout.PanelState.DRAGGING) {
+                    if (previousState == SlidingUpPanelLayout.PanelState.EXPANDED
+                            || previousState == SlidingUpPanelLayout.PanelState.COLLAPSED)
+                        _previousState = previousState;
+                } else if (newState == SlidingUpPanelLayout.PanelState.ANCHORED) {
+                    if (_previousState != null) {
+                        _slidingLayout.setPanelState(_previousState);
+                    }
+                }
+            }
+        });
+
+        // Close button
+        _buttonClose.setOnClickListener(v -> _slidingLayout.setPanelState(
+                SlidingUpPanelLayout.PanelState.COLLAPSED));
 
         return rootView;
     }
@@ -136,7 +168,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
         // Artwork
         if (!TextUtils.isEmpty(track.getTrackArtworkUrl())) {
-            String artworkUrl = ImageUtil.getHighDefArtworkUrl(track.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
+            String artworkUrl = ImageUtil.getHighDefArtworkUrl(
+                    track.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
             Glide.with(_activity)
                     .load(artworkUrl)
                     .centerCrop()
@@ -180,7 +213,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
             ConstraintSet set = new ConstraintSet();
             set.clone(_dragView);
-            set.connect(_scrollView.getId(), ConstraintSet.TOP, _guidelineDetails.getId(), ConstraintSet.BOTTOM);
+            set.connect(_scrollView.getId(), ConstraintSet.TOP,
+                    _guidelineDetails.getId(), ConstraintSet.BOTTOM);
             set.applyTo(_dragView);
         } else {
 
