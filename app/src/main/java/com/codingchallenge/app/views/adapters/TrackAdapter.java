@@ -68,6 +68,18 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         _itemClickListener = clickListener;
     }
 
+    // Adapter Getters and Setters
+
+    private boolean isClickable = true;
+
+    public boolean isClickable() {
+        return isClickable;
+    }
+
+    public void setClickable(boolean clickable) {
+        isClickable = clickable;
+    }
+
     public class TrackViewHolder extends RecyclerView.ViewHolder {
 
         private View _itemView;
@@ -96,9 +108,10 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
                 String artworkUrl = ImageUtil.getHighDefArtworkUrl(_track.getTrackArtworkUrl(), ArtworkDimensions.HI_DEF_MEDIUM);
                 Glide.with(_context)
                         .load(artworkUrl)
-                        .centerCrop()
-                        .encodeQuality(100)
+                        .placeholder(R.drawable.img_default)
                         .encodeFormat(Bitmap.CompressFormat.WEBP)
+                        .encodeQuality(100)
+                        .centerCrop()
                         .into(_trackArtwork);
             }
 
@@ -130,6 +143,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
         public void setListeners() {
             _itemView.setOnClickListener(v -> {
+                if (!isClickable)
+                    return;
                 if (_itemClickListener != null) {
                     _itemClickListener.onItemClick(v, getAdapterPosition());
                 }

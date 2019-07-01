@@ -43,7 +43,7 @@ import timber.log.Timber;
 
 public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmentViewModel> {
 
-    private static final int DISPLAY_DELAY = 100;
+    private static final int DISPLAY_DELAY = 200;
 
     private MainActivity _activity;
     private Unbinder _unbinder;
@@ -123,7 +123,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
         // Slide layout
         _slidingLayout.setScrollableView(_scrollView);
-        _slidingLayout.setTouchEnabled(false);
         _slidingLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
 
             @Override
@@ -138,11 +137,16 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
                 if (newState == SlidingUpPanelLayout.PanelState.DRAGGING) {
                     if (previousState == SlidingUpPanelLayout.PanelState.EXPANDED
                             || previousState == SlidingUpPanelLayout.PanelState.COLLAPSED)
-                        _previousState = previousState;
+                        _previousState = SlidingUpPanelLayout.PanelState.COLLAPSED;
                 } else if (newState == SlidingUpPanelLayout.PanelState.ANCHORED) {
                     if (_previousState != null) {
                         _slidingLayout.setPanelState(_previousState);
                     }
+                }
+
+                // Activate the recycler view once the sliding panel is in 'collapsed' state
+                if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                    _trackAdapter.setClickable(true);
                 }
             }
         });
@@ -164,6 +168,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
     private void onItemClickListener(View view, int position) {
 
+        _trackAdapter.setClickable(false);
+
         TrackModel track = _tracksList.get(position);
 
         // Artwork
@@ -172,9 +178,10 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
                     track.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
             Glide.with(_activity)
                     .load(artworkUrl)
-                    .centerCrop()
-                    .encodeQuality(100)
+                    .placeholder(R.drawable.img_default)
                     .encodeFormat(Bitmap.CompressFormat.WEBP)
+                    .encodeQuality(100)
+                    .centerCrop()
                     .into(_trackArtwork);
         }
 

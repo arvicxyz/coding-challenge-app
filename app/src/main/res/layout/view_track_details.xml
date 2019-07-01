@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:contentDescription="@string/default_content_desc_text"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/img_default"
         app:layout_constraintBottom_toTopOf="@id/guidelineImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1" />
@@ -108,10 +108,11 @@
 
         <ImageButton
             android:id="@+id/buttonClose"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:tint="@color/colorAccent"
             android:background="@android:color/transparent"
             android:contentDescription="@string/default_content_desc_text"
             android:src="@drawable/ic_close" />
