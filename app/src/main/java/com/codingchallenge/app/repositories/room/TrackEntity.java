@@ -1,17 +1,32 @@
-package com.codingchallenge.app.models;
+package com.codingchallenge.app.repositories.room;
 
-import com.squareup.moshi.Json;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class TrackModel extends BaseModel {
+@Entity(tableName = "tracks")
+public class TrackEntity {
 
+    @PrimaryKey
+    @NonNull
+    private String id;
     private String trackName;
     private float trackPrice;
-    @Json(name = "primaryGenreName")
     private String trackGenre;
-    @Json(name = "longDescription")
     private String trackDescription;
-    @Json(name = "artworkUrl100")
     private String trackArtworkUrl;
+
+    public TrackEntity() {
+    }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
 
     public String getTrackName() {
         return trackName;

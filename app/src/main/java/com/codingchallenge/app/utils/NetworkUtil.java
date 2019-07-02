@@ -2,28 +2,26 @@ package com.codingchallenge.app.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-
-import java.net.InetAddress;
-
-import timber.log.Timber;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 
 public class NetworkUtil {
 
-    public static boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddress = InetAddress.getByName("google.com");
-            return !ipAddress.equals(InetAddress.getByName(""));
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-        return false;
-    }
-
-    public static boolean isNetworkConnected(Context context) {
+    public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager == null)
             return false;
-        return connectivityManager.getActiveNetworkInfo() != null;
+        final Network[] networks = connectivityManager.getAllNetworks();
+        for (Network network : networks) {
+            NetworkCapabilities netCap = connectivityManager.getNetworkCapabilities(network);
+            if (netCap != null) {
+                int downSpeed = netCap.getLinkDownstreamBandwidthKbps();
+                if (downSpeed > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.codingchallenge.app.R;
 import com.codingchallenge.app.models.TrackModel;
 import com.codingchallenge.app.models.constants.ArtworkDimensions;
-import com.codingchallenge.app.services.TrackService;
+import com.codingchallenge.app.repositories.CachedDataRepository;
 import com.codingchallenge.app.utils.ImageUtil;
 import com.codingchallenge.app.viewmodels.HomeFragmentViewModel;
 import com.codingchallenge.app.views.MainActivity;
@@ -35,6 +35,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +51,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     private Handler _displayHandler;
 
     private TrackAdapter _trackAdapter;
-    private ArrayList<TrackModel> _tracksList;
+    private List<TrackModel> _tracksList;
 
     private SlidingUpPanelLayout.PanelState _previousState;
 
@@ -102,9 +103,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         _recyclerViewTracks.setItemViewCacheSize(20);
         _recyclerViewTracks.setLayoutManager(new LinearLayoutManager(_activity));
 
-        // Get tracks from API
-        TrackService service = new TrackService();
-        service.getTracks().observe(this, trackList -> {
+        // Get cached tracks
+        CachedDataRepository.getCachedTracks().observe(_activity, trackList -> {
             if (trackList != null && trackList.size() > 0) {
                 _tracksList = new ArrayList<>(trackList);
             } else {

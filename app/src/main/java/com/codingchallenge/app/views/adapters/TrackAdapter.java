@@ -44,11 +44,9 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     @Override
     public void onBindViewHolder(@NonNull TrackViewHolder holder, int position) {
         if (_tracksList != null) {
-            TrackModel notification = _tracksList.get(position);
-            holder.setData(notification);
+            TrackModel track = _tracksList.get(position);
+            holder.setData(track);
             holder.setListeners();
-        } else {
-            // TODO: Set empty notifications view
         }
     }
 
