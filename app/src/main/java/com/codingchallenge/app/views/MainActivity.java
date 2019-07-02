@@ -7,15 +7,14 @@ import android.view.KeyEvent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.codingchallenge.app.R;
 import com.codingchallenge.app.views.fragments.HomeFragment;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -70,7 +69,15 @@ public class MainActivity extends AppCompatActivity {
         Timber.i("onBackPressed");
         switch (_lastPosition) {
             case 0:
-                // Prompt user when they click on key back
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag("HomeFragment");
+                if (fragment != null) {
+                    SlidingUpPanelLayout slidingLayout = ((HomeFragment) fragment).getSlidingLayout();
+                    if (slidingLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                        slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                        return;
+                    }
+                }
+                finish();
                 break;
             default:
                 break;

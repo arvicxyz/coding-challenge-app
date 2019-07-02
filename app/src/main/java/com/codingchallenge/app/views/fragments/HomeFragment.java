@@ -151,6 +151,12 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
             }
         });
 
+        // Drag view
+        _dragView.setOnClickListener(v -> {
+            // Empty click listener, fixes slide layout
+            // collapsing on click outside the scroll view
+        });
+
         // Close button
         _buttonClose.setOnClickListener(v -> _slidingLayout.setPanelState(
                 SlidingUpPanelLayout.PanelState.COLLAPSED));
@@ -240,5 +246,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
             _scrollView.fullScroll(ScrollView.FOCUS_UP);
             _slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         }, DISPLAY_DELAY);
+    }
+
+    public SlidingUpPanelLayout getSlidingLayout() {
+        return _slidingLayout;
     }
 }
