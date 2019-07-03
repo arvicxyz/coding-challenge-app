@@ -11,10 +11,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Guideline;
@@ -36,6 +36,8 @@ import com.codingchallenge.app.views.MainActivity;
 import com.codingchallenge.app.views.adapters.TrackAdapter;
 import com.codingchallenge.app.views.base.BaseFragment;
 import com.codingchallenge.app.views.observers.HomeFragmentObserver;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.MessageFormat;
@@ -43,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -64,6 +67,21 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     private TrackModel _track;
     private int _lastScreenId;
 
+    @BindView(R.id.appbar)
+    AppBarLayout _appbar;
+
+    @BindView(R.id.collapsingToolbar)
+    CollapsingToolbarLayout _collapsingToolbar;
+
+    @BindView(R.id.toolbar)
+    Toolbar _toolbar;
+
+    @BindView(R.id.imageHeader)
+    ImageView _imageHeader;
+
+    @BindView(R.id.lastVisited)
+    TextView _lastVisited;
+
     @BindView(R.id.slidingLayout)
     com.sothree.slidinguppanel.SlidingUpPanelLayout _slidingLayout;
 
@@ -73,14 +91,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     @BindView(R.id.dragView)
     ConstraintLayout _dragView;
 
-    @BindView(R.id.guidelineImage)
-    Guideline _guidelineImage;
-
-    @BindView(R.id.guidelineDetails)
-    Guideline _guidelineDetails;
-
-    @BindView(R.id.buttonClose)
-    ImageButton _buttonClose;
+    @BindString(R.string.app_name)
+    String appName;
 
     // Details page views
     private ScrollView _scrollView;
@@ -89,6 +101,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     private TextView _trackGenre;
     private TextView _trackPrice;
     private TextView _trackDescription;
+    private Guideline _guidelineImage;
+    private Guideline _guidelineDetails;
+    private ImageButton _buttonClose;
 
     public HomeFragment() {
     }
@@ -101,6 +116,10 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         _activity = ((MainActivity) getActivity());
         _unbinder = ButterKnife.bind(this, rootView);
         _displayHandler = new Handler();
+
+        // Init UI
+        _activity.setSupportActionBar(_toolbar);
+        _collapsingToolbar.setTitle(appName);
 
         // Init adapter
         _trackAdapter = new TrackAdapter(_activity);
@@ -145,6 +164,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         _trackGenre = _dragView.findViewById(R.id.trackGenre);
         _trackPrice = _dragView.findViewById(R.id.trackPrice);
         _trackDescription = _dragView.findViewById(R.id.trackDescription);
+        _guidelineImage = _dragView.findViewById(R.id.guidelineImage);
+        _guidelineDetails = _dragView.findViewById(R.id.guidelineDetails);
+        _buttonClose = _dragView.findViewById(R.id.buttonClose);
 
         // Slide layout
         _slidingLayout.setScrollableView(_scrollView);
@@ -188,12 +210,12 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         _buttonClose.setOnClickListener(v -> _slidingLayout.setPanelState(
                 SlidingUpPanelLayout.PanelState.COLLAPSED));
 
-        // TODO: Show last visited in list view header
+        // Show last visited in list view header
         String lastDateVisited = SharedPrefRepository.getString(
                 SharedPrefRepository.LAST_DATE_VISITED, "");
-        Toast.makeText(_activity, DateTimeUtil.formatDate(lastDateVisited,
-                "yyyy-MM-dd'T'HH:mm:ss.SSS", "MMM dd, yyyy - hh:mm"),
-                Toast.LENGTH_LONG).show();
+        String formattedDate = DateTimeUtil.formatDate(lastDateVisited,
+                "yyyy-MM-dd'T'HH:mm:ss.SSS", "hh:mm a 'on' MMM dd, yyyy");
+        _lastVisited.setText(String.format("Last Visit: %s", formattedDate));
 
         return rootView;
     }
