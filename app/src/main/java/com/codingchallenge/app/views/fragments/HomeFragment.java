@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,7 @@ import com.codingchallenge.app.repositories.SharedPrefRepository;
 import com.codingchallenge.app.utils.DateTimeUtil;
 import com.codingchallenge.app.utils.ImageUtil;
 import com.codingchallenge.app.utils.ModelConverter;
+import com.codingchallenge.app.utils.Randomizer;
 import com.codingchallenge.app.viewmodels.HomeFragmentViewModel;
 import com.codingchallenge.app.views.MainActivity;
 import com.codingchallenge.app.views.adapters.TrackAdapter;
@@ -154,6 +156,20 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
             if (_lastScreenId != -1) {
                 // Run on UI thread
                 new Handler().post(() -> onItemClickListener(null, 0));
+            }
+
+            // Random featured track image display on app open
+            TrackModel featuredTrack = new Randomizer<TrackModel>().getRandomElement(_tracksList);
+            if (!TextUtils.isEmpty(featuredTrack.getTrackArtworkUrl())) {
+                String artworkUrl = ImageUtil.getHighDefArtworkUrl(
+                        featuredTrack.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
+                Glide.with(_activity)
+                        .load(artworkUrl)
+                        .placeholder(R.drawable.img_default)
+                        .encodeFormat(Bitmap.CompressFormat.WEBP)
+                        .encodeQuality(100)
+                        .centerCrop()
+                        .into(_imageHeader);
             }
         });
 
