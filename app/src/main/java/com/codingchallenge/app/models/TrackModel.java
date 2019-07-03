@@ -4,6 +4,7 @@ import com.squareup.moshi.Json;
 
 public class TrackModel extends BaseModel {
 
+    private int trackId;
     private String trackName;
     private float trackPrice;
     @Json(name = "primaryGenreName")
@@ -12,6 +13,14 @@ public class TrackModel extends BaseModel {
     private String trackDescription;
     @Json(name = "artworkUrl100")
     private String trackArtworkUrl;
+
+    public int getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
+    }
 
     public String getTrackName() {
         return trackName;
@@ -51,5 +60,12 @@ public class TrackModel extends BaseModel {
 
     public void setTrackArtworkUrl(String trackArtworkUrl) {
         this.trackArtworkUrl = trackArtworkUrl;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(this.getClass()))
+            return ((TrackModel) obj).getTrackId() == this.trackId;
+        return false;
     }
 }

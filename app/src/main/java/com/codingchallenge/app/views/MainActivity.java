@@ -12,8 +12,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.codingchallenge.app.R;
+import com.codingchallenge.app.repositories.SharedPrefRepository;
 import com.codingchallenge.app.views.fragments.HomeFragment;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
+import org.threeten.bp.LocalDateTime;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -32,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Init libraries
         ButterKnife.bind(this);
+        AndroidThreeTen.init(this);
         Timber.plant(new Timber.DebugTree());
+        SharedPrefRepository.init(this);
 
         _lastPosition = -1;
 
@@ -51,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         displayView(0);
+    }
+
+    @Override
+    protected void onStop() {
+        // Save date when user previously visited
+        SharedPrefRepository.putString(SharedPrefRepository.LAST_DATE_VISITED, LocalDateTime.now().toString());
+        super.onStop();
     }
 
     @Override

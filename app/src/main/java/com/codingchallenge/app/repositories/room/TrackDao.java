@@ -3,6 +3,7 @@ package com.codingchallenge.app.repositories.room;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -14,8 +15,14 @@ public interface TrackDao {
     LiveData<List<TrackEntity>> getAllTracks();
 
     @Query("SELECT * FROM tracks WHERE id=:id")
-    LiveData<TrackEntity> getTrack(String id);
+    LiveData<TrackEntity> getTrack(int id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(TrackEntity track);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<TrackEntity> tracks);
+
+    @Query("DELETE FROM tracks")
+    void deleteAll();
 }

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,8 +25,12 @@ import com.bumptech.glide.Glide;
 import com.codingchallenge.app.R;
 import com.codingchallenge.app.models.TrackModel;
 import com.codingchallenge.app.models.constants.ArtworkDimensions;
+import com.codingchallenge.app.repositories.AppRepository;
 import com.codingchallenge.app.repositories.CachedDataRepository;
+import com.codingchallenge.app.repositories.SharedPrefRepository;
+import com.codingchallenge.app.utils.DateTimeUtil;
 import com.codingchallenge.app.utils.ImageUtil;
+import com.codingchallenge.app.utils.ModelConverter;
 import com.codingchallenge.app.viewmodels.HomeFragmentViewModel;
 import com.codingchallenge.app.views.MainActivity;
 import com.codingchallenge.app.views.adapters.TrackAdapter;
@@ -35,6 +40,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,6 +60,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     private List<TrackModel> _tracksList;
 
     private SlidingUpPanelLayout.PanelState _previousState;
+
+    private TrackModel _track;
+    private int _lastScreenId;
 
     @BindView(R.id.slidingLayout)
     com.sothree.slidinguppanel.SlidingUpPanelLayout _slidingLayout;
@@ -110,7 +119,23 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
             } else {
                 _tracksList = new ArrayList<>();
             }
-            _trackAdapter.setItemList(trackList);
+
+            // Sort list by Track ID from lowest to highest
+            Collections.sort(_tracksList, (o1, o2) -> {
+                Integer x = o1.getTrackId();
+                Integer y = o2.getTrackId();
+                return x - y;
+            });
+
+            _trackAdapter.setItemList(_tracksList);
+
+            // Display last screen that the user was on
+            _lastScreenId = SharedPrefRepository.getInt(
+                    SharedPrefRepository.LAST_SCREEN_ID, -1);
+            if (_lastScreenId != -1) {
+                // Run on UI thread
+                new Handler().post(() -> onItemClickListener(null, 0));
+            }
         });
 
         // Init all details page views
@@ -147,6 +172,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
                 // Activate the recycler view once the sliding panel is in 'collapsed' state
                 if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
                     _trackAdapter.setClickable(true);
+                    // Save last screen that the user was on, "-1" is home
+                    SharedPrefRepository.putInt(SharedPrefRepository.LAST_SCREEN_ID, -1);
                 }
             }
         });
@@ -160,6 +187,13 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         // Close button
         _buttonClose.setOnClickListener(v -> _slidingLayout.setPanelState(
                 SlidingUpPanelLayout.PanelState.COLLAPSED));
+
+        // TODO: Show last visited in list view header
+        String lastDateVisited = SharedPrefRepository.getString(
+                SharedPrefRepository.LAST_DATE_VISITED, "");
+        Toast.makeText(_activity, DateTimeUtil.formatDate(lastDateVisited,
+                "yyyy-MM-dd'T'HH:mm:ss.SSS", "MMM dd, yyyy - hh:mm"),
+                Toast.LENGTH_LONG).show();
 
         return rootView;
     }
@@ -176,12 +210,25 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
         _trackAdapter.setClickable(false);
 
-        TrackModel track = _tracksList.get(position);
+        _track = _tracksList.get(position);
+        if (view == null && position == 0) {
+            AppRepository.getInstance(_activity).getTrackRepository().getTrack(_lastScreenId).observe(_activity, track -> {
+                if (track != null) {
+                    _track = ModelConverter.convert(track);
+                    initTrackDetails();
+                }
+            });
+        } else {
+            initTrackDetails();
+        }
+    }
+
+    private void initTrackDetails() {
 
         // Artwork
-        if (!TextUtils.isEmpty(track.getTrackArtworkUrl())) {
+        if (!TextUtils.isEmpty(_track.getTrackArtworkUrl())) {
             String artworkUrl = ImageUtil.getHighDefArtworkUrl(
-                    track.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
+                    _track.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
             Glide.with(_activity)
                     .load(artworkUrl)
                     .placeholder(R.drawable.img_default)
@@ -192,7 +239,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         }
 
         // Name
-        String trackName = track.getTrackName();
+        String trackName = _track.getTrackName();
         if (!TextUtils.isEmpty(trackName)) {
             _trackName.setText(trackName);
         } else {
@@ -200,7 +247,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         }
 
         // Genre
-        String trackGenre = track.getTrackGenre();
+        String trackGenre = _track.getTrackGenre();
         if (!TextUtils.isEmpty(trackGenre)) {
             _trackGenre.setText(trackGenre);
             _trackGenre.setVisibility(View.VISIBLE);
@@ -209,7 +256,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         }
 
         // Price
-        float trackPrice = track.getTrackPrice();
+        float trackPrice = _track.getTrackPrice();
         if (trackPrice > 0) {
             _trackPrice.setText(MessageFormat.format("$ {0}", trackPrice));
         } else {
@@ -217,7 +264,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         }
 
         // Description
-        String trackDescription = track.getTrackDescription();
+        String trackDescription = _track.getTrackDescription();
         if (!TextUtils.isEmpty(trackDescription)) {
 
             _trackDescription.setText(trackDescription);
@@ -245,6 +292,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         _displayHandler.postDelayed(() -> {
             _scrollView.fullScroll(ScrollView.FOCUS_UP);
             _slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            // Save last screen that the user was on
+            SharedPrefRepository.putInt(SharedPrefRepository.LAST_SCREEN_ID, _track.getTrackId());
         }, DISPLAY_DELAY);
     }
 

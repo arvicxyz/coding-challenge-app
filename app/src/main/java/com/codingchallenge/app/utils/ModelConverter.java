@@ -10,7 +10,7 @@ public class ModelConverter {
 
     public static TrackModel convert(TrackEntity entity) {
         TrackModel model = new TrackModel();
-        model.setId(entity.getId());
+        model.setTrackId(entity.getId());
         model.setTrackName(entity.getTrackName());
         model.setTrackPrice(entity.getTrackPrice());
         model.setTrackGenre(entity.getTrackGenre());
@@ -21,7 +21,7 @@ public class ModelConverter {
 
     public static TrackEntity convert(TrackModel model) {
         TrackEntity entity = new TrackEntity();
-        entity.setId(model.getId());
+        entity.setId(model.getTrackId());
         entity.setTrackName(model.getTrackName());
         entity.setTrackPrice(model.getTrackPrice());
         entity.setTrackGenre(model.getTrackGenre());

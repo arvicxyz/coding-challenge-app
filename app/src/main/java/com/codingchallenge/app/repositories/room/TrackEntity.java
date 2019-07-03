@@ -9,7 +9,7 @@ public class TrackEntity {
 
     @PrimaryKey
     @NonNull
-    private String id;
+    private int id;
     private String trackName;
     private float trackPrice;
     private String trackGenre;
@@ -19,12 +19,11 @@ public class TrackEntity {
     public TrackEntity() {
     }
 
-    @NonNull
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

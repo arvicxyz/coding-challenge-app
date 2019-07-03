@@ -28,12 +28,20 @@ public class TrackRepository extends BaseRepository {
         return _trackList;
     }
 
-    public LiveData<TrackEntity> getTrack(String trackId) {
+    public LiveData<TrackEntity> getTrack(int trackId) {
         return _trackDao.getTrack(trackId);
     }
 
     public void insert(TrackEntity track) {
         new InsertAsyncTask(_trackDao).execute(track);
+    }
+
+    public void insertAll(List<TrackEntity> tracks) {
+        new InsertAllAsyncTask(_trackDao).execute(tracks);
+    }
+
+    public void deleteAll() {
+        new DeleteAllAsyncTask(_trackDao).execute();
     }
 
     // Async Tasks
@@ -61,6 +69,34 @@ public class TrackRepository extends BaseRepository {
         @Override
         protected Void doInBackground(TrackEntity... trackEntities) {
             _trackDao.insert(trackEntities[0]);
+            return null;
+        }
+    }
+
+    private class InsertAllAsyncTask extends AsyncTask<List<TrackEntity>, Void, Void> {
+
+        TrackDao _trackDao;
+
+        InsertAllAsyncTask(TrackDao trackDao) {
+            _trackDao = trackDao;
+        }
+
+        @Override
+        protected Void doInBackground(List<TrackEntity>... trackEntities) {
+            _trackDao.insertAll(trackEntities[0]);
+            return null;
+        }
+    }
+
+    private class DeleteAllAsyncTask extends OperationsAsyncTask {
+
+        DeleteAllAsyncTask(TrackDao trackDao) {
+            super(trackDao);
+        }
+
+        @Override
+        protected Void doInBackground(TrackEntity... trackEntities) {
+            _trackDao.deleteAll();
             return null;
         }
     }

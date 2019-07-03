@@ -13,12 +13,10 @@ import com.codingchallenge.app.repositories.AppRepository;
 import com.codingchallenge.app.repositories.CachedDataRepository;
 import com.codingchallenge.app.repositories.room.TrackEntity;
 import com.codingchallenge.app.services.TrackService;
-import com.codingchallenge.app.utils.AppSettings;
 import com.codingchallenge.app.utils.ModelConverter;
 import com.codingchallenge.app.utils.NetworkUtil;
 
 import java.util.List;
-import java.util.UUID;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -30,22 +28,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        AppSettings.setAppRepository(new AppRepository(this));
-
         if (NetworkUtil.isNetworkAvailable(this)) {
             // ONLINE
+
+            AppRepository.getInstance(this).getTrackRepository().deleteAll();
 
             // Get tracks from API
             TrackService service = new TrackService();
             service.getTracks().observe(this, trackList -> {
 
                 if (trackList != null && trackList.size() > 0) {
-                    for (TrackModel model : trackList) {
-                        TrackEntity entity = ModelConverter.convert(model);
-                        String entityId = UUID.randomUUID().toString();
-                        entity.setId(entityId);
-                        AppSettings.getAppRepository().getTrackRepository().insert(entity);
-                    }
+                    AppRepository.getInstance(this).getTrackRepository().insertAll(ModelConverter.convertModelToEntity(trackList));
                     CachedDataRepository.setCachedTracks(trackList);
                 }
 
@@ -57,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
             // OFFLINE
 
             // Get tracks from local DB
-            AppSettings.getAppRepository().getTrackRepository().getAllTracks().observe(this, trackList -> {
+            AppRepository.getInstance(this).getTrackRepository().getAllTracks().observe(this, trackList -> {
 
                 if (trackList != null && trackList.size() > 0) {
                     List<TrackModel> tracks = ModelConverter.convertEntityToModel(trackList);
