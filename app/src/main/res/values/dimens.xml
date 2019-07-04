@@ -1,31 +1,53 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <!-- Fonts -->
-    <dimen name="huge_font_size">25sp</dimen>
-    <dimen name="big_font_size">20sp</dimen>
+    <!-- Font Size -->
+    <dimen name="big_title_font_size">24sp</dimen>
+    <dimen name="title_font_size">20sp</dimen>
     <dimen name="header_font_size">18sp</dimen>
-    <dimen name="title_font_size">16sp</dimen>
+    <dimen name="sub_header_font_size">16sp</dimen>
     <dimen name="label_font_size">14sp</dimen>
-    <dimen name="text_font_size">12sp</dimen>
-    <dimen name="small_font_size">10sp</dimen>
-    <dimen name="tiny_font_size">8sp</dimen>
-    <dimen name="input_font_size">14sp</dimen>
+    <dimen name="body_font_size">12sp</dimen>
+    <dimen name="input_font_size">16sp</dimen>
     <dimen name="button_font_size">14sp</dimen>
-    <!-- Icon Fonts -->
-    <dimen name="icon_font_small_size">15sp</dimen>
-    <dimen name="icon_font_medium_size">20sp</dimen>
-    <dimen name="icon_font_big_size">25sp</dimen>
-    <dimen name="icon_font_size">30sp</dimen>
-    <dimen name="icon_font_l_size">35sp</dimen>
-    <dimen name="icon_font_xl_size">40sp</dimen>
-    <dimen name="icon_font_xxl_size">45sp</dimen>
-    <dimen name="icon_font_xxxl_size">50sp</dimen>
+    <dimen name="error_font_size">12sp</dimen>
+    <!-- Button -->
+    <dimen name="default_button_radius">3dp</dimen>
+    <!-- Divider -->
+    <dimen name="divider_size">0.5dp</dimen>
     <!-- Padding -->
-    <dimen name="page_padding_size">20dp</dimen>
+    <dimen name="page_padding_size">8dp</dimen>
     <!-- Margin -->
-    <dimen name="vertical_margin_size">16dp</dimen>
-    <dimen name="horizontal_margin_size">16dp</dimen>
-    <!-- Custom -->
+    <dimen name="vertical_margin_size">8dp</dimen>
+    <dimen name="horizontal_margin_size">8dp</dimen>
+    <!-- # Custom # -->
+    <!-- Splash -->
+    <dimen name="splash_logo_width">282dp</dimen>
+    <dimen name="splash_logo_height">90dp</dimen>
+    <!-- Home : Toolbar -->
     <dimen name="appbar_header_height">256dp</dimen>
-    <dimen name="activity_margin_content">24dp</dimen>
+    <dimen name="expanded_title_margin_start">24dp</dimen>
+    <dimen name="last_visited_text_padding">8dp</dimen>
+    <dimen name="featured_image_scrim_height">160dp</dimen>
+    <!-- Home : Slide Up & Scroll View -->
+    <dimen name="recycler_scrollbar_size">2dp</dimen>
+    <dimen name="slide_up_panel_height">0dp</dimen>
+    <dimen name="slide_up_shadow_height">0dp</dimen>
+    <!-- Track Item : Card -->
+    <dimen name="track_item_card_side_margin">8dp</dimen>
+    <dimen name="track_item_card_side_half_margin">4dp</dimen>
+    <dimen name="track_item_card_radius">0dp</dimen>
+    <dimen name="track_item_card_elevation">1dp</dimen>
+    <!-- Track Item : Content -->
+    <dimen name="track_item_image_size">80dp</dimen>
+    <dimen name="track_item_image_padding">2dp</dimen>
+    <dimen name="track_item_details_padding">8dp</dimen>
+    <!-- Track Details -->
+    <dimen name="drag_view_bg_padding">5dp</dimen>
+    <dimen name="drag_view_bg_tl_radius">0dp</dimen>
+    <dimen name="drag_view_bg_tr_radius">0dp</dimen>
+    <dimen name="track_details_scroll_fade_length">50dp</dimen>
+    <dimen name="track_details_layout_padding">16dp</dimen>
+    <dimen name="track_details_spacing">16dp</dimen>
+    <dimen name="button_close_size">20dp</dimen>
+    <dimen name="button_close_margin">16dp</dimen>
 </resources>

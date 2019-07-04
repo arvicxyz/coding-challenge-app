@@ -102,11 +102,11 @@
 
     <style name="dividerHorizontal" parent="dividerBase">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_height">@dimen/divider_size</item>
     </style>
 
     <style name="dividerVertical" parent="dividerBase">
-        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_width">@dimen/divider_size</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 

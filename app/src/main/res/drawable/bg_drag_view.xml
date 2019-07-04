@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="5dp"
+    android:padding="@dimen/drag_view_bg_padding"
     android:shape="rectangle">
     <solid android:color="@color/colorDetailsBg" />
     <corners
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp" />
+        android:topLeftRadius="@dimen/drag_view_bg_tl_radius"
+        android:topRightRadius="@dimen/drag_view_bg_tr_radius" />
 </shape>

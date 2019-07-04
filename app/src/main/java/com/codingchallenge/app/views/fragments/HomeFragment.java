@@ -230,7 +230,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
                 SharedPrefRepository.LAST_DATE_VISITED, "");
         String formattedDate = DateTimeUtil.formatDate(lastDateVisited,
                 "yyyy-MM-dd'T'HH:mm:ss.SSS", "hh:mm a 'on' MMM dd, yyyy");
-        _lastVisited.setText(String.format("Last Visit: %s", formattedDate));
+        _lastVisited.setText(String.format("Last visit: %s", formattedDate));
 
         return rootView;
     }
