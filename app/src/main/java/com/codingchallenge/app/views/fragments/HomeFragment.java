@@ -26,9 +26,8 @@ import com.codingchallenge.app.R;
 import com.codingchallenge.app.models.TrackModel;
 import com.codingchallenge.app.models.constants.ArtworkDimensions;
 import com.codingchallenge.app.repositories.AppRepository;
-import com.codingchallenge.app.repositories.CachedDataRepository;
 import com.codingchallenge.app.repositories.SharedPrefRepository;
-import com.codingchallenge.app.utils.DateTimeUtil;
+import com.codingchallenge.app.utils.AppSettings;
 import com.codingchallenge.app.utils.ImageUtil;
 import com.codingchallenge.app.utils.ModelConverter;
 import com.codingchallenge.app.utils.Randomizer;
@@ -41,7 +40,6 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -55,6 +53,9 @@ import timber.log.Timber;
 public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmentViewModel> {
 
     private static final int DISPLAY_DELAY = 200;
+    private static final int CACHE_SIZE = 20;
+    private static final float GUIDE_PERCENT_POS_FROM = 0.72f;
+    private static final float GUIDE_PERCENT_POS_TO = 0.9f;
 
     private MainActivity _activity;
     private Unbinder _unbinder;
@@ -84,7 +85,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     TextView _lastVisited;
 
     @BindView(R.id.slidingLayout)
-    com.sothree.slidinguppanel.SlidingUpPanelLayout _slidingLayout;
+    SlidingUpPanelLayout _slidingLayout;
 
     @BindView(R.id.recyclerViewTracks)
     RecyclerView _recyclerViewTracks;
@@ -104,7 +105,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     private TextView _trackDescription;
     private Guideline _guidelineImage;
     private Guideline _guidelineDetails;
-    private ImageButton _buttonClose;
 
     public HomeFragment() {
     }
@@ -129,48 +129,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         // Init recycler view
         _recyclerViewTracks.setAdapter(_trackAdapter);
         _recyclerViewTracks.setHasFixedSize(true);
-        _recyclerViewTracks.setItemViewCacheSize(20);
+        _recyclerViewTracks.setItemViewCacheSize(CACHE_SIZE);
         _recyclerViewTracks.setLayoutManager(new LinearLayoutManager(_activity));
-
-        // Get cached tracks
-        CachedDataRepository.getCachedTracks().observe(_activity, trackList -> {
-            if (trackList != null && trackList.size() > 0) {
-                _tracksList = new ArrayList<>(trackList);
-            } else {
-                _tracksList = new ArrayList<>();
-            }
-
-            // Sort list by Track ID from lowest to highest
-            Collections.sort(_tracksList, (o1, o2) -> {
-                Integer x = o1.getTrackId();
-                Integer y = o2.getTrackId();
-                return x - y;
-            });
-
-            _trackAdapter.setItemList(_tracksList);
-
-            // Display last screen that the user was on
-            _lastScreenId = SharedPrefRepository.getInt(
-                    SharedPrefRepository.LAST_SCREEN_ID, -1);
-            if (_lastScreenId != -1) {
-                // Run on UI thread
-                new Handler().post(() -> onItemClickListener(null, 0));
-            }
-
-            // Random featured track image display on app open
-            TrackModel featuredTrack = new Randomizer<TrackModel>().getRandomElement(_tracksList);
-            if (!TextUtils.isEmpty(featuredTrack.getTrackArtworkUrl())) {
-                String artworkUrl = ImageUtil.getHighDefArtworkUrl(
-                        featuredTrack.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
-                Glide.with(_activity)
-                        .load(artworkUrl)
-                        .placeholder(R.drawable.img_default)
-                        .encodeFormat(Bitmap.CompressFormat.WEBP)
-                        .encodeQuality(100)
-                        .centerCrop()
-                        .into(_imageHeader);
-            }
-        });
 
         // Init all details page views
         _scrollView = _dragView.findViewById(R.id.scrollView);
@@ -181,7 +141,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         _trackDescription = _dragView.findViewById(R.id.trackDescription);
         _guidelineImage = _dragView.findViewById(R.id.guidelineImage);
         _guidelineDetails = _dragView.findViewById(R.id.guidelineDetails);
-        _buttonClose = _dragView.findViewById(R.id.buttonClose);
 
         // Slide layout
         _slidingLayout.setScrollableView(_scrollView);
@@ -222,15 +181,54 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         });
 
         // Close button
-        _buttonClose.setOnClickListener(v -> _slidingLayout.setPanelState(
+        ImageButton buttonClose = _dragView.findViewById(R.id.buttonClose);
+        buttonClose.setOnClickListener(v -> _slidingLayout.setPanelState(
                 SlidingUpPanelLayout.PanelState.COLLAPSED));
 
+        // Get cached tracks
+        getViewModel().getTracksList().observe(_activity, trackList -> {
+            if (trackList != null && trackList.size() > 0) {
+                _tracksList = new ArrayList<>(trackList);
+            } else {
+                _tracksList = new ArrayList<>();
+            }
+
+            // Sort list by Track ID from lowest to highest
+            Collections.sort(_tracksList, (o1, o2) -> {
+                Integer x = o1.getTrackId();
+                Integer y = o2.getTrackId();
+                return x - y;
+            });
+
+            _trackAdapter.setItemList(_tracksList);
+
+            // Display last screen that the user was on
+            _lastScreenId = SharedPrefRepository.getInt(
+                    SharedPrefRepository.LAST_SCREEN_ID, -1);
+            if (_lastScreenId > 0) {
+                // Run on UI thread
+                new Handler().post(() -> onItemClickListener(null, 0));
+            }
+
+            // Random featured track image display on app open
+            TrackModel featuredTrack = new Randomizer<TrackModel>().getRandomElement(_tracksList);
+            if (!TextUtils.isEmpty(featuredTrack.getTrackArtworkUrl())) {
+                String artworkUrl = ImageUtil.getHighDefArtworkUrl(
+                        featuredTrack.getTrackArtworkUrl(), ArtworkDimensions.SUPER_HI_DEF_MEDIUM);
+                Glide.with(_activity)
+                        .load(artworkUrl)
+                        .placeholder(R.drawable.img_default)
+                        .encodeFormat(Bitmap.CompressFormat.WEBP)
+                        .encodeQuality(100)
+                        .centerCrop()
+                        .into(_imageHeader);
+            }
+        });
+
         // Show last visited in list view header
-        String lastDateVisited = SharedPrefRepository.getString(
-                SharedPrefRepository.LAST_DATE_VISITED, "");
-        String formattedDate = DateTimeUtil.formatDate(lastDateVisited,
-                "yyyy-MM-dd'T'HH:mm:ss.SSS", "hh:mm a 'on' MMM dd, yyyy");
-        _lastVisited.setText(String.format("Last visit: %s", formattedDate));
+        getViewModel().getLastDateVisited().observe(_activity, formattedDate -> {
+            _lastVisited.setText(String.format("Last visit: %s", formattedDate));
+        });
 
         return rootView;
     }
@@ -244,9 +242,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
     }
 
     private void onItemClickListener(View view, int position) {
-
         _trackAdapter.setClickable(false);
-
         _track = _tracksList.get(position);
         if (view == null && position == 0) {
             AppRepository.getInstance(_activity).getTrackRepository().getTrack(_lastScreenId).observe(_activity, track -> {
@@ -295,7 +291,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         // Price
         float trackPrice = _track.getTrackPrice();
         if (trackPrice > 0) {
-            _trackPrice.setText(MessageFormat.format("$ {0}", trackPrice));
+            _trackPrice.setText(String.format(AppSettings.LOCALE, "$ {0}", trackPrice));
         } else {
             _trackPrice.setText(_activity.getString(R.string.free_text));
         }
@@ -306,7 +302,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
             _trackDescription.setText(trackDescription);
             _trackDescription.setVisibility(View.VISIBLE);
-            _guidelineImage.setGuidelinePercent(0.72f);
+            _guidelineImage.setGuidelinePercent(GUIDE_PERCENT_POS_FROM);
 
             ConstraintSet set = new ConstraintSet();
             set.clone(_dragView);
@@ -318,7 +314,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
             // Pull down views above description if it has no description
             _trackDescription.setText("");
             _trackDescription.setVisibility(View.GONE);
-            _guidelineImage.setGuidelinePercent(0.9f);
+            _guidelineImage.setGuidelinePercent(GUIDE_PERCENT_POS_TO);
 
             ConstraintSet set = new ConstraintSet();
             set.clone(_dragView);
