@@ -4,8 +4,8 @@ import java.util.List;
 
 public class SearchResultModel {
 
-    public int resultCount;
-    public List<TrackModel> results;
+    private int resultCount;
+    private List<TrackModel> results;
 
     public int getResultCount() {
         return resultCount;

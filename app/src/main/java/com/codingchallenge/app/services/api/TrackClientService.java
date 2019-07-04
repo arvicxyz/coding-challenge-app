@@ -38,7 +38,7 @@ public class TrackClientService extends ApiClient {
         @Override
         protected String doInBackground(String... params) {
 
-            // Fetch response base on the resource
+            // Fetch response base on the resource url
             String response = "";
             String resource = _apiClient.getBaseUrl() + _apiClient.getController()
                     + "term=star&amp;country=au&amp;media=movie";
@@ -61,7 +61,7 @@ public class TrackClientService extends ApiClient {
             try {
                 SearchResultModel searchResult = jsonAdapter.fromJson(s);
                 if (searchResult != null)
-                    _trackList.setValue(searchResult.results);
+                    _trackList.setValue(searchResult.getResults());
             } catch (Exception ex) {
                 Timber.e(ex.toString());
                 cancel(true);

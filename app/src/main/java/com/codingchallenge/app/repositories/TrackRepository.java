@@ -24,12 +24,12 @@ public class TrackRepository extends BaseRepository {
 
     // Tracks
 
-    public LiveData<List<TrackEntity>> getAllTracks() {
-        return _trackList;
-    }
-
     public LiveData<TrackEntity> getTrack(int trackId) {
         return _trackDao.getTrack(trackId);
+    }
+
+    public LiveData<List<TrackEntity>> getAllTracks() {
+        return _trackList;
     }
 
     public void insert(TrackEntity track) {

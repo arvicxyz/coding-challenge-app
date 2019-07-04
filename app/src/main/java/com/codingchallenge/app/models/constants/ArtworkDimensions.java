@@ -36,7 +36,7 @@ public class ArtworkDimensions {
     public static final int DEFAULT_MEDIUM = 60;
     public static final int DEFAULT_LARGE = 100;
 
-    public static final int HI_DEF_SMALL = 150;
+    public static final int HI_DEF_SMALL = 160;
     public static final int HI_DEF_MEDIUM = 220;
     public static final int HI_DEF_LARGE = 340;
 

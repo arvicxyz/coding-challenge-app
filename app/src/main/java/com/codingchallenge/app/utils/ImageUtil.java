@@ -6,7 +6,7 @@ public class ImageUtil {
 
         String result = null;
 
-        String imageFilename = dimension + "x" + dimension + "bb.jpg";
+        String imageFilename = String.format(AppSettings.LOCALE, "%dx%dbb.jpg", dimension, dimension);
         String defaultImgFilename = "100x100bb.jpg";
 
         if (artworkUrl.contains(defaultImgFilename)) {

@@ -13,13 +13,15 @@ public class AppRepository {
         return instance;
     }
 
+    public AppRepository(Context context) {
+        trackRepository = new TrackRepository(context);
+    }
+
+    // Repositories
+
     private TrackRepository trackRepository;
 
     public TrackRepository getTrackRepository() {
         return trackRepository;
-    }
-
-    public AppRepository(Context context) {
-        trackRepository = new TrackRepository(context);
     }
 }

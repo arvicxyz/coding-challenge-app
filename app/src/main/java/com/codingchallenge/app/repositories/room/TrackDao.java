@@ -11,11 +11,11 @@ import java.util.List;
 @Dao
 public interface TrackDao {
 
-    @Query("SELECT * FROM tracks")
-    LiveData<List<TrackEntity>> getAllTracks();
-
     @Query("SELECT * FROM tracks WHERE id=:id")
     LiveData<TrackEntity> getTrack(int id);
+
+    @Query("SELECT * FROM tracks")
+    LiveData<List<TrackEntity>> getAllTracks();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(TrackEntity track);

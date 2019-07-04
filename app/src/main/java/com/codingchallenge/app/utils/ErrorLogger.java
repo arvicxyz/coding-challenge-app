@@ -20,7 +20,7 @@ public class ErrorLogger {
                 "No Internet Connection!",
                 "Please check your connection and try again.",
                 null, "OK", null,
-                null, (dialog, which) -> activity.onBackPressed(), null,
+                null, (dialog, which) -> activity.finish(), null,
                 null, false));
     }
 }

@@ -10,6 +10,8 @@ public class CachedDataRepository {
 
     private static MutableLiveData<List<TrackModel>> cachedTracks;
 
+    // Getters and Setters
+
     public static MutableLiveData<List<TrackModel>> getCachedTracks() {
         return cachedTracks;
     }
