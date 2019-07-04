@@ -10,16 +10,14 @@ public class BaseViewModel<T extends Activity> extends ViewModel implements IBas
 
     private Activity _activity;
 
-    protected BaseViewModel() {
-    }
-
-    @Override
     public Activity getActivity() {
         return _activity;
     }
 
-    @Override
     public void setActivity(Activity activity) {
         _activity = activity;
+    }
+
+    protected BaseViewModel() {
     }
 }

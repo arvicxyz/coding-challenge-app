@@ -48,6 +48,6 @@
     <dimen name="track_details_scroll_fade_length">50dp</dimen>
     <dimen name="track_details_layout_padding">16dp</dimen>
     <dimen name="track_details_spacing">16dp</dimen>
-    <dimen name="button_close_size">20dp</dimen>
-    <dimen name="button_close_margin">16dp</dimen>
+    <dimen name="button_close_size">24dp</dimen>
+    <dimen name="button_close_padding">16dp</dimen>
 </resources>

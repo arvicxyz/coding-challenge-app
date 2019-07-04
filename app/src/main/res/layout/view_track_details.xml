@@ -103,6 +103,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@drawable/bg_fade_top_edge"
         android:gravity="end"
+        android:padding="@dimen/button_close_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -110,8 +111,6 @@
             android:id="@+id/buttonClose"
             android:layout_width="@dimen/button_close_size"
             android:layout_height="@dimen/button_close_size"
-            android:layout_marginTop="@dimen/button_close_margin"
-            android:layout_marginEnd="@dimen/button_close_margin"
             android:tint="@color/colorAccent"
             android:background="@android:color/transparent"
             android:contentDescription="@string/default_content_desc_text"

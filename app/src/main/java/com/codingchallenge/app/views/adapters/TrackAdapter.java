@@ -69,11 +69,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     // Adapter Getters and Setters
 
     private boolean isClickable = true;
-
-    public boolean isClickable() {
-        return isClickable;
-    }
-
     public void setClickable(boolean clickable) {
         isClickable = clickable;
     }
