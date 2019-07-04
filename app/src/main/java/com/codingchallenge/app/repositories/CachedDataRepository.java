@@ -1,5 +1,6 @@
 package com.codingchallenge.app.repositories;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.codingchallenge.app.models.TrackModel;
@@ -12,7 +13,7 @@ public class CachedDataRepository {
 
     // Getters and Setters
 
-    public static MutableLiveData<List<TrackModel>> getCachedTracks() {
+    public static LiveData<List<TrackModel>> getCachedTracks() {
         return cachedTracks;
     }
 

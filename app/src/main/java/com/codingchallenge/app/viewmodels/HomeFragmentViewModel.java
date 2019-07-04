@@ -1,5 +1,6 @@
 package com.codingchallenge.app.viewmodels;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.codingchallenge.app.models.TrackModel;
@@ -17,7 +18,7 @@ public class HomeFragmentViewModel extends BaseViewModel {
     private static final String FROM_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
     private static final String TO_DATE_FORMAT = "hh:mm a 'on' MMM dd, yyyy";
 
-    private MutableLiveData<List<TrackModel>> _tracksList;
+    private LiveData<List<TrackModel>> _tracksList;
     private MutableLiveData<String> _lastDateVisited;
 
     public HomeFragmentViewModel() {
@@ -29,14 +30,14 @@ public class HomeFragmentViewModel extends BaseViewModel {
         Timber.i("onCleared");
     }
 
-    public MutableLiveData<List<TrackModel>> getTracksList() {
+    public LiveData<List<TrackModel>> getTracksList() {
         if (_tracksList == null) {
             _tracksList = CachedDataRepository.getCachedTracks();
         }
         return _tracksList;
     }
 
-    public MutableLiveData<String> getLastDateVisited() {
+    public LiveData<String> getLastDateVisited() {
         if (_lastDateVisited == null) {
             _lastDateVisited = new MutableLiveData<>();
             updateLastDateVisited();

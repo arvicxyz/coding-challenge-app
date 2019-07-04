@@ -1,5 +1,6 @@
 package com.codingchallenge.app.services;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.codingchallenge.app.models.TrackModel;
@@ -15,7 +16,7 @@ public class TrackService {
         _clientService = new TrackClientService();
     }
 
-    public MutableLiveData<List<TrackModel>> getTracks() {
+    public LiveData<List<TrackModel>> getTracks() {
         return _clientService.getTracks();
     }
 }

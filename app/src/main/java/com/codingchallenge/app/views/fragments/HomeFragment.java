@@ -27,7 +27,6 @@ import com.codingchallenge.app.models.TrackModel;
 import com.codingchallenge.app.models.constants.ArtworkDimensions;
 import com.codingchallenge.app.repositories.AppRepository;
 import com.codingchallenge.app.repositories.SharedPrefRepository;
-import com.codingchallenge.app.utils.AppSettings;
 import com.codingchallenge.app.utils.ImageUtil;
 import com.codingchallenge.app.utils.ModelConverter;
 import com.codingchallenge.app.utils.Randomizer;
@@ -40,6 +39,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +59,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
     private MainActivity _activity;
     private Unbinder _unbinder;
+    private HomeFragmentViewModel _viewModel;
     private Handler _displayHandler;
 
     private TrackAdapter _trackAdapter;
@@ -116,6 +117,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
 
         _activity = ((MainActivity) getActivity());
         _unbinder = ButterKnife.bind(this, rootView);
+        _viewModel = getViewModel();
         _displayHandler = new Handler();
 
         // Init UI
@@ -186,7 +188,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
                 SlidingUpPanelLayout.PanelState.COLLAPSED));
 
         // Get cached tracks
-        getViewModel().getTracksList().observe(_activity, trackList -> {
+        _viewModel.getTracksList().observe(_activity, trackList -> {
             if (trackList != null && trackList.size() > 0) {
                 _tracksList = new ArrayList<>(trackList);
             } else {
@@ -226,7 +228,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         });
 
         // Show last visited in list view header
-        getViewModel().getLastDateVisited().observe(_activity, formattedDate -> {
+        _viewModel.getLastDateVisited().observe(_activity, formattedDate -> {
             _lastVisited.setText(String.format("Last visit: %s", formattedDate));
         });
 
@@ -291,7 +293,7 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
         // Price
         float trackPrice = _track.getTrackPrice();
         if (trackPrice > 0) {
-            _trackPrice.setText(String.format(AppSettings.LOCALE, "$ {0}", trackPrice));
+            _trackPrice.setText(MessageFormat.format("$ {0}", trackPrice));
         } else {
             _trackPrice.setText(_activity.getString(R.string.free_text));
         }

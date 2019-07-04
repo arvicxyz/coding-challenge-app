@@ -2,6 +2,7 @@ package com.codingchallenge.app.services.api;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.codingchallenge.app.models.SearchResultModel;
@@ -69,8 +70,7 @@ public class TrackClientService extends ApiClient {
         }
     }
 
-    public MutableLiveData<List<TrackModel>> getTracks() {
-
+    public LiveData<List<TrackModel>> getTracks() {
         MutableLiveData<List<TrackModel>> trackList = new MutableLiveData<>();
         try {
             new GetTracks(this, trackList).execute();

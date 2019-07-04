@@ -2,8 +2,6 @@ package com.codingchallenge.app.views.base;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,12 +27,6 @@ public class BaseFragment<T1 extends LifecycleObserver, T2 extends BaseViewModel
         super.onActivityCreated(savedInstanceState);
         getLifecycle().addObserver(_observer);
         _viewModel = ViewModelProviders.of(this).get(_viewModel.getClass());
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        _viewModel.setActivity((AppCompatActivity) getActivity());
     }
 
     public T1 getObserver() {
