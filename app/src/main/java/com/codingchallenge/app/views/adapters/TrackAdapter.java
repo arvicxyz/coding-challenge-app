@@ -1,7 +1,6 @@
 package com.codingchallenge.app.views.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +101,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
                 Glide.with(_context)
                         .load(artworkUrl)
                         .placeholder(R.drawable.img_default)
-                        .encodeFormat(Bitmap.CompressFormat.WEBP)
                         .encodeQuality(100)
                         .centerCrop()
                         .into(_trackArtwork);

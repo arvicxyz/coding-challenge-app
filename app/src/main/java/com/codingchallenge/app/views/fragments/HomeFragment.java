@@ -1,6 +1,5 @@
 package com.codingchallenge.app.views.fragments;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -220,7 +219,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
                 Glide.with(_activity)
                         .load(artworkUrl)
                         .placeholder(R.drawable.img_default)
-                        .encodeFormat(Bitmap.CompressFormat.WEBP)
                         .encodeQuality(100)
                         .centerCrop()
                         .into(_imageHeader);
@@ -267,7 +265,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentObserver, HomeFragmen
             Glide.with(_activity)
                     .load(artworkUrl)
                     .placeholder(R.drawable.img_default)
-                    .encodeFormat(Bitmap.CompressFormat.WEBP)
                     .encodeQuality(100)
                     .centerCrop()
                     .into(_trackArtwork);
