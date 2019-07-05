@@ -1,5 +1,5 @@
 # Introduction
-This repository contains a coding challenge project. It's an Android mobile application called Notflix. Notflix is a movie and music app but it doesn't let you watch movie nor let you listen to music. It's just an app that displays a list of items obtained from iTunes Search API and shows a detailed view for each item. The project applies MVVM architecture and its UI applies a bit of material design with dark mode color pallete implementation.
+This repository contains a coding challenge project. It's an Android mobile application called Notflix. Notflix is a movie and music app, but it doesn't let you watch movies nor let you listen to music. It's just an app that displays a list of items obtained from iTunes Search API and shows a detailed view for each item. The project applies MVVM architecture and its UI applies a bit of material design with dark mode color pallete implementation.
 
 # Objective
 Create a master-detail application that contains at least one dependency. This application should display a list of items obtained from iTunes Search API and show a detailed view for each item. The URL you must obtain your data from is as follows:
@@ -23,7 +23,7 @@ Your app should demonstrate ability to save data and reuse it when the user open
 - Your choices should be explained in a README.md or in code comments
 
 Our suggestions:
-- A date when user previously visited, shown in the list header
+- A date when user previously visited, shown in the list header.
 - Save the last screen that the user was on. When the app restores, it should present the user with that screen.
 
 You can save other data. Add any supporting information in the same manner as above.
@@ -32,7 +32,7 @@ You can save other data. Add any supporting information in the same manner as ab
 In the app, I used the MVVM or Model-View-ViewModel architecture which Google strongly advises for developers to use. I also used Service and Repository pattern for data processing and data accessing respectively. I also used Client Service, a type of Service which I use to fetch data from a server. I used Google's Android Jetpack Architecture components to make everything working smoothly in the app like the Lifecycles, LiveData, ViewModel and Room components.
 
 ### Model
-The *models* folder in the app contains the constants, enums, interfaces and the model. Basically anything that concerns a data that is used within the app is located here. It's a collection of enums, interfaces and classes with fields and getters & setters or sometimes just constant values.
+The *models* folder in the app contains the constants, enums, interfaces and the models. Basically anything that concerns a data that is used within the app is located here. It's a collection of enums, interfaces and classes with fields, getters & setters or sometimes just constant values. The model in the models folder is where the data that we are going to work with is modelled from.
 
 ### View
 The *views* folder in the app contains the adapters, fragments, activities, custom views as well as observers. I usually create apps with single activity multiple fragments composition usually just a MainActivity launcher and a bunch of fragments with it. But due to some warnings I'm getting in the manifest to provide at least one activity with ACTION-VIEW intent filter, I now provide two activities. Because the downside if I don't do that then the apps I will make will not be indexable by Google Search which will drive less traffic that means less downloads resulting into low profit. And no one wants that.
@@ -68,3 +68,6 @@ The caching is also used in the app to provide data stored in the RAM. As you ca
 The *utils* folder is a collection of helper classes that helps you process data. The services folder has similarity with the utils folder, but the distinction is that, a service class can be tied to a model while a util class is a utility or a helper class that helps in the overall application. The util classes basically fills the roles that the other components doesn't do.
 
 ## User Interface
+
+[//]: # "![old1](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old1.jpg)"
+<img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old1.jpg" alt="old1" width="200"/>
