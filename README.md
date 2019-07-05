@@ -71,47 +71,28 @@ The *utils* folder is a collection of helper classes that helps you process data
 Welcome to the presentation layer, visual part and the part that took the most time in the completion of this coding challenge. (Sorry about that:D). I would say I applied material design through margins, paddings, fonts but overall the paper like material layout design was not followed in the later part of the UI development. At first I wanted the app to just be plain and simple with white backgrounds and surfaces everywhere (the white app screenshots were not taken unfortunately), but then I realized it was boring. So I wanted to learn the dark theme mode material design guidelines at the same time complete the challenge so I leaned it and applied it. Well, just the color sheme part of it. :) It was looking okay now, but still I wanted to apply something new so I thought of implementing this UI (See Guide section below) from the Netflix app, but only the middle part of the screenshot for the details page. While the details page was derived from Netflix, the list page (home page/master page) was derived from Spotify with the rounded corners (See Guide section below) in the first iteration and then later on I decided to remove the rounded corners. To cut the long story short, I can't decide on the look of the app and took it a long time and then named the app Notflix because it is Not Netflix. Yeah it's so corny. LOL!
 
 ### Guides
-[//]: # "![master-page-guide](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/guide.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/guide.jpg" alt="master-page-guide" width="200"/>
-[//]: # "![detail-page-guide](https://www.techybugz.com/wp-content/uploads/2018/12/Netflix-Download-2.jpg)"
 <img src="https://www.techybugz.com/wp-content/uploads/2018/12/Netflix-Download-2.jpg" alt="detail-page-guide" width="200"/>
 
 ### Older Screenshots
-[//]: # "![old1](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old1.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old1.jpg" alt="old1" width="200"/>
-[//]: # "![old2](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old2.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old2.jpg" alt="old2" width="200"/>
 
 ### Old Screenshots
-[//]: # "![old3](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old3.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old3.jpg" alt="old3" width="200"/>
-[//]: # "![old4](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old4.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old4.jpg" alt="old4" width="200"/>
-[//]: # "![old5](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old5.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old5.jpg" alt="old5" width="200"/>
-[//]: # "![old6](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old6.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old6.jpg" alt="old6" width="200"/>
-[//]: # "![old7](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old7.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old7.jpg" alt="old7" width="200"/>
-[//]: # "![old8](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old8.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old8.jpg" alt="old8" width="200"/>
-[//]: # "![old9](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old9.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/old9.jpg" alt="old9" width="200"/>
 
 ### New Screenshots
-[//]: # "![new1](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new1.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new1.jpg" alt="new1" width="200"/>
-[//]: # "![new2](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new2.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new2.jpg" alt="new2" width="200"/>
-[//]: # "![new3](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new3.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new3.jpg" alt="new3" width="200"/>
-[//]: # "![new4](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new4.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new4.jpg" alt="new4" width="200"/>
-[//]: # "![new5](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new5.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new5.jpg" alt="new5" width="200"/>
-[//]: # "![new6](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new6.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new6.jpg" alt="new6" width="200"/>
-[//]: # "![new7](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new7.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new7.jpg" alt="new7" width="200"/>
-[//]: # "![new8](https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new8.jpg)"
 <img src="https://github.com/arvicxyz/coding-challenge-app/blob/master/screenshots/new8.jpg" alt="new8" width="200"/>
