@@ -25,7 +25,6 @@ public class ApiClient {
     protected String getBaseUrl() {
         return baseUrl;
     }
-
     protected void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
@@ -33,7 +32,6 @@ public class ApiClient {
     protected String getController() {
         return controller;
     }
-
     protected void setController(String controller) {
         this.controller = controller;
     }

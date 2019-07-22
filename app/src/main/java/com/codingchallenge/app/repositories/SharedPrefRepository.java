@@ -12,7 +12,6 @@ public class SharedPrefRepository {
     public static final String LAST_SCREEN_ID = "last_screen_id";
 
     private static SharedPreferences sharedPreferences;
-
     public static SharedPreferences getSharedPreferences() {
         return sharedPreferences;
     }
